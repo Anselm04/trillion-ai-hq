@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /throne
+Disallow: /watch
+Disallow: /desk
+Disallow: /account
+Disallow: /checkout
+Disallow: /admin
+Disallow: /in
+Disallow: /login
+Disallow: /signup
+Disallow: /redeem
+Disallow: /api
+
+Sitemap: https://trillionaitech.com/sitemap.xml

@@ -1,69 +1,59 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { PublicShell } from "@/components/public-shell";
-import { ProductArt } from "@/components/product-art";
-import { VantaBadge } from "@/components/vanta-badge";
+import { ProductCard } from "@/components/product-card";
+import { TrillionEmblem } from "@/components/trillion-mark";
 import { listProducts } from "@/lib/trillion/catalog";
-import { formatPrice } from "@/lib/trillion/format";
 import { CATEGORIES } from "@/lib/trillion/types";
-import { cn } from "@/lib/utils";
+import { CATEGORY_PATH } from "@/lib/trillion/paths";
+import { useI18n } from "@/lib/i18n/locale";
+import type { MessageKey } from "@/lib/i18n/messages";
+import { pageSeo } from "@/lib/seo";
 
-export const Route = createFileRoute("/market")({ component: Market });
+export const Route = createFileRoute("/market")({
+  head: () =>
+    pageSeo({
+      title: "Catalog",
+      description: "Trillion Market — apps, games, agents, tools, and software. Only products uploaded by Trillion AI Tech Ltd.",
+      path: "/market",
+    }),
+  component: Market,
+});
 
 function Market() {
+  const { t } = useI18n();
   const products = useQuery({ queryKey: ["products"], queryFn: () => listProducts() });
-  const [cat, setCat] = useState<string>("all");
-  const items = (products.data ?? []).filter((p) => cat === "all" || p.category === cat);
+  const items = products.data ?? [];
 
   return (
     <PublicShell>
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <p className="text-xs tracking-[0.22em] text-sage uppercase">Trillion Market</p>
-        <h1 className="mt-3 font-display text-4xl">From the studio</h1>
-        <p className="mt-3 max-w-xl text-muted-foreground">
-          Apps, games, agents, tools, and software. No subscription tiers. Request access until a
-          product is listed for sale.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-2">
-          {["all", ...CATEGORIES].map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => setCat(c)}
-              className={cn(
-                "h-10 rounded-full border px-4 text-sm",
-                cat === c
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border text-muted-foreground hover:text-foreground",
-              )}
-            >
-              {c === "all" ? "All" : c}
-            </button>
-          ))}
-        </div>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((p) => (
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <p className="text-[10px] tracking-[0.28em] text-sage uppercase">{t("market.kicker")}</p>
+        <h1 className="mt-4 font-display text-5xl sm:text-6xl">{t("market.title")}</h1>
+        <p className="mt-4 max-w-xl text-muted-foreground">{t("market.sub")}</p>
+
+        <div className="mt-12 grid gap-3 sm:grid-cols-5">
+          {CATEGORIES.map((c) => (
             <Link
-              key={p.id}
-              to="/market/$slug"
-              params={{ slug: p.slug }}
-              className="overflow-hidden rounded-2xl bg-card shadow-[var(--shadow-border)]"
+              key={c}
+              to={CATEGORY_PATH[c]}
+              className="rounded-2xl bg-card px-4 py-8 text-center shadow-[var(--shadow-border)] hover:shadow-[var(--shadow-border-hover)]"
             >
-              <ProductArt slug={p.slug} category={p.category} className="h-32 w-full" />
-              <div className="p-5">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="font-display text-xl">{p.name}</h2>
-                  {p.vantaReady && <VantaBadge />}
-                </div>
-                <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{p.tagline}</p>
-                <p className="mt-4 text-sm tabular-nums">{formatPrice(p.priceCents, p.billing)}</p>
-              </div>
+              <TrillionEmblem className="mx-auto h-10 w-10" />
+              <p className="mt-4 font-display text-2xl">{t(`cat.${c}` as MessageKey)}</p>
             </Link>
           ))}
         </div>
+
+        {items.length > 0 && (
+          <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        )}
         {products.isSuccess && items.length === 0 && (
-          <p className="mt-12 text-sm text-muted-foreground">No products in this category yet.</p>
+          <p className="mt-16 text-sm text-muted-foreground">{t("home.empty")}</p>
         )}
       </div>
     </PublicShell>

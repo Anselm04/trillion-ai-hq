@@ -56,6 +56,39 @@ export const empireOverview = createServerFn({ method: "GET" })
       from orders where status = 'paid' and created_at > now() - interval '14 days'
       group by 1 order by 1
     `;
+    const views14 = await sql<{ n: number }>`
+      select count(*)::int as n from usage_events
+      where event_type = 'product_view' and created_at > now() - interval '14 days'
+    `;
+    const viewsByDay = await sql<{ day: string; views: number }>`
+      select to_char(created_at, 'YYYY-MM-DD') as day, count(*)::int as views
+      from usage_events
+      where event_type = 'product_view' and created_at > now() - interval '14 days'
+      group by 1 order by 1
+    `;
+    const viewsByProduct = await sql<{ name: string; slug: string; views: number }>`
+      select p.name, p.slug, count(*)::int as views
+      from usage_events u
+      join products p on p.id = u.product_id
+      where u.event_type = 'product_view' and u.created_at > now() - interval '14 days'
+      group by p.id, p.name, p.slug
+      order by views desc
+      limit 12
+    `;
+    const recentOrders = await sql<{
+      id: number;
+      product_name: string;
+      amount_cents: number;
+      status: string;
+      created_at: string;
+    }>`
+      select o.id, coalesce(p.name, 'Unknown') as product_name, o.amount_cents, o.status,
+             o.created_at::text as created_at
+      from orders o
+      left join products p on p.id = o.product_id
+      order by o.id desc
+      limit 20
+    `;
     return {
       products: products[0]?.n ?? 0,
       people: people[0]?.n ?? 0,
@@ -68,6 +101,16 @@ export const empireOverview = createServerFn({ method: "GET" })
       architectOn: Boolean(architect[0]?.enabled),
       recentAudit: recentAudit.map(mapAudit),
       revenueByDay,
+      catalogViews14: views14[0]?.n ?? 0,
+      viewsByDay,
+      viewsByProduct,
+      recentOrders: recentOrders.map((r) => ({
+        id: r.id,
+        productName: r.product_name,
+        amountCents: r.amount_cents,
+        status: r.status,
+        createdAt: r.created_at,
+      })),
     };
   });
 

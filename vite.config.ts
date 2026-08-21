@@ -150,6 +150,30 @@ export default defineConfig(({ command, isPreview }) => ({
     host: "0.0.0.0",
     port: 8080,
     strictPort: true,
+    warmup: {
+      clientFiles: [
+        "./src/routes/__root.tsx",
+        "./src/routes/index.tsx",
+        "./src/components/public-shell.tsx",
+        "./src/routes/login.tsx",
+        "./src/routes/signup.tsx",
+        "./src/components/auth-form.tsx",
+        "./src/lib/auth/client.ts",
+      ],
+    },
+  },
+  optimizeDeps: {
+    include: [
+      "react",
+      "react-dom",
+      "react-dom/client",
+      "@tanstack/react-query",
+      "@tanstack/react-router",
+      "better-auth/react",
+      "better-auth/client/plugins",
+      "sonner",
+      "lucide-react",
+    ],
   },
   preview: {
     host: "127.0.0.1",

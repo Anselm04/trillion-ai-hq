@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DashGate, DashShell } from "@/components/dash-shell";
+import { pageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/watch")({
+  head: () => pageSeo({ title: "Security", path: "/watch", noindex: true, description: "Private." }),
   component: () => (
     <DashGate perm="enterWatch">
       <DashShell

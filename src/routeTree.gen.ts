@@ -12,15 +12,31 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AccountRouteImport } from './routes/account'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AgentsRouteImport } from './routes/agents'
+import { Route as AppsRouteImport } from './routes/apps'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DeskRouteRouteImport } from './routes/desk/route'
+import { Route as ForgeRouteImport } from './routes/forge'
+import { Route as GamesRouteImport } from './routes/games'
+import { Route as InRouteImport } from './routes/in'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MarketRouteImport } from './routes/market'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ReachRouteImport } from './routes/reach'
 import { Route as RedeemRouteImport } from './routes/redeem'
+import { Route as ShieldRouteImport } from './routes/shield'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SoftwareRouteImport } from './routes/software'
 import { Route as TeamRouteImport } from './routes/team'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ThroneRouteRouteImport } from './routes/throne/route'
+import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as WatchRouteRouteImport } from './routes/watch/route'
 import { Route as CheckoutSlugRouteImport } from './routes/checkout.$slug'
+import { Route as CheckoutCancelRouteImport } from './routes/checkout.cancel'
 import { Route as CheckoutCompleteRouteImport } from './routes/checkout.complete'
 import { Route as DeskIndexRouteImport } from './routes/desk/index'
 import { Route as DeskCampaignsRouteImport } from './routes/desk/campaigns'
@@ -34,6 +50,7 @@ import { Route as ThroneAnalyticsRouteImport } from './routes/throne/analytics'
 import { Route as ThroneArchitectRouteImport } from './routes/throne/architect'
 import { Route as ThroneAuditRouteImport } from './routes/throne/audit'
 import { Route as ThroneGodCodesRouteImport } from './routes/throne/god-codes'
+import { Route as ThronePaymentsRouteImport } from './routes/throne/payments'
 import { Route as ThroneProductsRouteImport } from './routes/throne/products'
 import { Route as ThroneRecoveryRouteImport } from './routes/throne/recovery'
 import { Route as ThroneSecurityRouteImport } from './routes/throne/security'
@@ -48,6 +65,7 @@ import { Route as WatchReportsRouteImport } from './routes/watch/reports'
 import { Route as WatchScannerRouteImport } from './routes/watch/scanner'
 import { Route as WatchStaffRouteImport } from './routes/watch/staff'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,6 +82,21 @@ const AccountRoute = AccountRouteImport.update({
   path: '/account',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentsRoute = AgentsRouteImport.update({
+  id: '/agents',
+  path: '/agents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsRoute = AppsRouteImport.update({
+  id: '/apps',
+  path: '/apps',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -72,6 +105,21 @@ const ContactRoute = ContactRouteImport.update({
 const DeskRouteRoute = DeskRouteRouteImport.update({
   id: '/desk',
   path: '/desk',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgeRoute = ForgeRouteImport.update({
+  id: '/forge',
+  path: '/forge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GamesRoute = GamesRouteImport.update({
+  id: '/games',
+  path: '/games',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InRoute = InRouteImport.update({
+  id: '/in',
+  path: '/in',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -84,9 +132,44 @@ const MarketRoute = MarketRouteImport.update({
   path: '/market',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReachRoute = ReachRouteImport.update({
+  id: '/reach',
+  path: '/reach',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RedeemRoute = RedeemRouteImport.update({
   id: '/redeem',
   path: '/redeem',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShieldRoute = ShieldRouteImport.update({
+  id: '/shield',
+  path: '/shield',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SoftwareRoute = SoftwareRouteImport.update({
+  id: '/software',
+  path: '/software',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TeamRoute = TeamRouteImport.update({
@@ -94,9 +177,19 @@ const TeamRoute = TeamRouteImport.update({
   path: '/team',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ThroneRouteRoute = ThroneRouteRouteImport.update({
   id: '/throne',
   path: '/throne',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WatchRouteRoute = WatchRouteRouteImport.update({
@@ -107,6 +200,11 @@ const WatchRouteRoute = WatchRouteRouteImport.update({
 const CheckoutSlugRoute = CheckoutSlugRouteImport.update({
   id: '/checkout/$slug',
   path: '/checkout/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutCancelRoute = CheckoutCancelRouteImport.update({
+  id: '/checkout/cancel',
+  path: '/checkout/cancel',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutCompleteRoute = CheckoutCompleteRouteImport.update({
@@ -172,6 +270,11 @@ const ThroneAuditRoute = ThroneAuditRouteImport.update({
 const ThroneGodCodesRoute = ThroneGodCodesRouteImport.update({
   id: '/god-codes',
   path: '/god-codes',
+  getParentRoute: () => ThroneRouteRoute,
+} as any)
+const ThronePaymentsRoute = ThronePaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
   getParentRoute: () => ThroneRouteRoute,
 } as any)
 const ThroneProductsRoute = ThroneProductsRouteImport.update({
@@ -244,6 +347,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
+  id: '/api/stripe/webhook',
+  path: '/api/stripe/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -252,12 +360,28 @@ export interface FileRoutesByFullPath {
   '/watch': typeof WatchRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/admin': typeof AdminRoute
+  '/agents': typeof AgentsRoute
+  '/apps': typeof AppsRoute
   '/contact': typeof ContactRoute
+  '/forge': typeof ForgeRoute
+  '/games': typeof GamesRoute
+  '/in': typeof InRoute
   '/login': typeof LoginRoute
   '/market': typeof MarketRouteWithChildren
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/reach': typeof ReachRoute
   '/redeem': typeof RedeemRoute
+  '/shield': typeof ShieldRoute
+  '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/software': typeof SoftwareRoute
   '/team': typeof TeamRoute
+  '/terms': typeof TermsRoute
+  '/tools': typeof ToolsRoute
   '/checkout/$slug': typeof CheckoutSlugRoute
+  '/checkout/cancel': typeof CheckoutCancelRoute
   '/checkout/complete': typeof CheckoutCompleteRoute
   '/desk/campaigns': typeof DeskCampaignsRoute
   '/desk/compliance': typeof DeskComplianceRoute
@@ -269,6 +393,7 @@ export interface FileRoutesByFullPath {
   '/throne/architect': typeof ThroneArchitectRoute
   '/throne/audit': typeof ThroneAuditRoute
   '/throne/god-codes': typeof ThroneGodCodesRoute
+  '/throne/payments': typeof ThronePaymentsRoute
   '/throne/products': typeof ThroneProductsRoute
   '/throne/recovery': typeof ThroneRecoveryRoute
   '/throne/security': typeof ThroneSecurityRoute
@@ -285,17 +410,34 @@ export interface FileRoutesByFullPath {
   '/throne/': typeof ThroneIndexRoute
   '/watch/': typeof WatchIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/admin': typeof AdminRoute
+  '/agents': typeof AgentsRoute
+  '/apps': typeof AppsRoute
   '/contact': typeof ContactRoute
+  '/forge': typeof ForgeRoute
+  '/games': typeof GamesRoute
+  '/in': typeof InRoute
   '/login': typeof LoginRoute
   '/market': typeof MarketRouteWithChildren
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/reach': typeof ReachRoute
   '/redeem': typeof RedeemRoute
+  '/shield': typeof ShieldRoute
+  '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/software': typeof SoftwareRoute
   '/team': typeof TeamRoute
+  '/terms': typeof TermsRoute
+  '/tools': typeof ToolsRoute
   '/checkout/$slug': typeof CheckoutSlugRoute
+  '/checkout/cancel': typeof CheckoutCancelRoute
   '/checkout/complete': typeof CheckoutCompleteRoute
   '/desk/campaigns': typeof DeskCampaignsRoute
   '/desk/compliance': typeof DeskComplianceRoute
@@ -307,6 +449,7 @@ export interface FileRoutesByTo {
   '/throne/architect': typeof ThroneArchitectRoute
   '/throne/audit': typeof ThroneAuditRoute
   '/throne/god-codes': typeof ThroneGodCodesRoute
+  '/throne/payments': typeof ThronePaymentsRoute
   '/throne/products': typeof ThroneProductsRoute
   '/throne/recovery': typeof ThroneRecoveryRoute
   '/throne/security': typeof ThroneSecurityRoute
@@ -323,6 +466,7 @@ export interface FileRoutesByTo {
   '/throne': typeof ThroneIndexRoute
   '/watch': typeof WatchIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -332,12 +476,28 @@ export interface FileRoutesById {
   '/watch': typeof WatchRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/admin': typeof AdminRoute
+  '/agents': typeof AgentsRoute
+  '/apps': typeof AppsRoute
   '/contact': typeof ContactRoute
+  '/forge': typeof ForgeRoute
+  '/games': typeof GamesRoute
+  '/in': typeof InRoute
   '/login': typeof LoginRoute
   '/market': typeof MarketRouteWithChildren
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/reach': typeof ReachRoute
   '/redeem': typeof RedeemRoute
+  '/shield': typeof ShieldRoute
+  '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/software': typeof SoftwareRoute
   '/team': typeof TeamRoute
+  '/terms': typeof TermsRoute
+  '/tools': typeof ToolsRoute
   '/checkout/$slug': typeof CheckoutSlugRoute
+  '/checkout/cancel': typeof CheckoutCancelRoute
   '/checkout/complete': typeof CheckoutCompleteRoute
   '/desk/campaigns': typeof DeskCampaignsRoute
   '/desk/compliance': typeof DeskComplianceRoute
@@ -349,6 +509,7 @@ export interface FileRoutesById {
   '/throne/architect': typeof ThroneArchitectRoute
   '/throne/audit': typeof ThroneAuditRoute
   '/throne/god-codes': typeof ThroneGodCodesRoute
+  '/throne/payments': typeof ThronePaymentsRoute
   '/throne/products': typeof ThroneProductsRoute
   '/throne/recovery': typeof ThroneRecoveryRoute
   '/throne/security': typeof ThroneSecurityRoute
@@ -365,6 +526,7 @@ export interface FileRoutesById {
   '/throne/': typeof ThroneIndexRoute
   '/watch/': typeof WatchIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -375,12 +537,28 @@ export interface FileRouteTypes {
     | '/watch'
     | '/about'
     | '/account'
+    | '/admin'
+    | '/agents'
+    | '/apps'
     | '/contact'
+    | '/forge'
+    | '/games'
+    | '/in'
     | '/login'
     | '/market'
+    | '/pricing'
+    | '/privacy'
+    | '/reach'
     | '/redeem'
+    | '/shield'
+    | '/signup'
+    | '/sitemap.xml'
+    | '/software'
     | '/team'
+    | '/terms'
+    | '/tools'
     | '/checkout/$slug'
+    | '/checkout/cancel'
     | '/checkout/complete'
     | '/desk/campaigns'
     | '/desk/compliance'
@@ -392,6 +570,7 @@ export interface FileRouteTypes {
     | '/throne/architect'
     | '/throne/audit'
     | '/throne/god-codes'
+    | '/throne/payments'
     | '/throne/products'
     | '/throne/recovery'
     | '/throne/security'
@@ -408,17 +587,34 @@ export interface FileRouteTypes {
     | '/throne/'
     | '/watch/'
     | '/api/auth/$'
+    | '/api/stripe/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/account'
+    | '/admin'
+    | '/agents'
+    | '/apps'
     | '/contact'
+    | '/forge'
+    | '/games'
+    | '/in'
     | '/login'
     | '/market'
+    | '/pricing'
+    | '/privacy'
+    | '/reach'
     | '/redeem'
+    | '/shield'
+    | '/signup'
+    | '/sitemap.xml'
+    | '/software'
     | '/team'
+    | '/terms'
+    | '/tools'
     | '/checkout/$slug'
+    | '/checkout/cancel'
     | '/checkout/complete'
     | '/desk/campaigns'
     | '/desk/compliance'
@@ -430,6 +626,7 @@ export interface FileRouteTypes {
     | '/throne/architect'
     | '/throne/audit'
     | '/throne/god-codes'
+    | '/throne/payments'
     | '/throne/products'
     | '/throne/recovery'
     | '/throne/security'
@@ -446,6 +643,7 @@ export interface FileRouteTypes {
     | '/throne'
     | '/watch'
     | '/api/auth/$'
+    | '/api/stripe/webhook'
   id:
     | '__root__'
     | '/'
@@ -454,12 +652,28 @@ export interface FileRouteTypes {
     | '/watch'
     | '/about'
     | '/account'
+    | '/admin'
+    | '/agents'
+    | '/apps'
     | '/contact'
+    | '/forge'
+    | '/games'
+    | '/in'
     | '/login'
     | '/market'
+    | '/pricing'
+    | '/privacy'
+    | '/reach'
     | '/redeem'
+    | '/shield'
+    | '/signup'
+    | '/sitemap.xml'
+    | '/software'
     | '/team'
+    | '/terms'
+    | '/tools'
     | '/checkout/$slug'
+    | '/checkout/cancel'
     | '/checkout/complete'
     | '/desk/campaigns'
     | '/desk/compliance'
@@ -471,6 +685,7 @@ export interface FileRouteTypes {
     | '/throne/architect'
     | '/throne/audit'
     | '/throne/god-codes'
+    | '/throne/payments'
     | '/throne/products'
     | '/throne/recovery'
     | '/throne/security'
@@ -487,6 +702,7 @@ export interface FileRouteTypes {
     | '/throne/'
     | '/watch/'
     | '/api/auth/$'
+    | '/api/stripe/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -496,14 +712,31 @@ export interface RootRouteChildren {
   WatchRouteRoute: typeof WatchRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AccountRoute: typeof AccountRoute
+  AdminRoute: typeof AdminRoute
+  AgentsRoute: typeof AgentsRoute
+  AppsRoute: typeof AppsRoute
   ContactRoute: typeof ContactRoute
+  ForgeRoute: typeof ForgeRoute
+  GamesRoute: typeof GamesRoute
+  InRoute: typeof InRoute
   LoginRoute: typeof LoginRoute
   MarketRoute: typeof MarketRouteWithChildren
+  PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ReachRoute: typeof ReachRoute
   RedeemRoute: typeof RedeemRoute
+  ShieldRoute: typeof ShieldRoute
+  SignupRoute: typeof SignupRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SoftwareRoute: typeof SoftwareRoute
   TeamRoute: typeof TeamRoute
+  TermsRoute: typeof TermsRoute
+  ToolsRoute: typeof ToolsRoute
   CheckoutSlugRoute: typeof CheckoutSlugRoute
+  CheckoutCancelRoute: typeof CheckoutCancelRoute
   CheckoutCompleteRoute: typeof CheckoutCompleteRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -529,6 +762,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agents': {
+      id: '/agents'
+      path: '/agents'
+      fullPath: '/agents'
+      preLoaderRoute: typeof AgentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apps': {
+      id: '/apps'
+      path: '/apps'
+      fullPath: '/apps'
+      preLoaderRoute: typeof AppsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -541,6 +795,27 @@ declare module '@tanstack/react-router' {
       path: '/desk'
       fullPath: '/desk'
       preLoaderRoute: typeof DeskRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forge': {
+      id: '/forge'
+      path: '/forge'
+      fullPath: '/forge'
+      preLoaderRoute: typeof ForgeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/games': {
+      id: '/games'
+      path: '/games'
+      fullPath: '/games'
+      preLoaderRoute: typeof GamesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/in': {
+      id: '/in'
+      path: '/in'
+      fullPath: '/in'
+      preLoaderRoute: typeof InRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -557,11 +832,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reach': {
+      id: '/reach'
+      path: '/reach'
+      fullPath: '/reach'
+      preLoaderRoute: typeof ReachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/redeem': {
       id: '/redeem'
       path: '/redeem'
       fullPath: '/redeem'
       preLoaderRoute: typeof RedeemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shield': {
+      id: '/shield'
+      path: '/shield'
+      fullPath: '/shield'
+      preLoaderRoute: typeof ShieldRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/software': {
+      id: '/software'
+      path: '/software'
+      fullPath: '/software'
+      preLoaderRoute: typeof SoftwareRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/team': {
@@ -571,11 +895,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/throne': {
       id: '/throne'
       path: '/throne'
       fullPath: '/throne'
       preLoaderRoute: typeof ThroneRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/watch': {
@@ -590,6 +928,13 @@ declare module '@tanstack/react-router' {
       path: '/checkout/$slug'
       fullPath: '/checkout/$slug'
       preLoaderRoute: typeof CheckoutSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/cancel': {
+      id: '/checkout/cancel'
+      path: '/checkout/cancel'
+      fullPath: '/checkout/cancel'
+      preLoaderRoute: typeof CheckoutCancelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout/complete': {
@@ -681,6 +1026,13 @@ declare module '@tanstack/react-router' {
       path: '/god-codes'
       fullPath: '/throne/god-codes'
       preLoaderRoute: typeof ThroneGodCodesRouteImport
+      parentRoute: typeof ThroneRouteRoute
+    }
+    '/throne/payments': {
+      id: '/throne/payments'
+      path: '/payments'
+      fullPath: '/throne/payments'
+      preLoaderRoute: typeof ThronePaymentsRouteImport
       parentRoute: typeof ThroneRouteRoute
     }
     '/throne/products': {
@@ -781,6 +1133,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/stripe/webhook': {
+      id: '/api/stripe/webhook'
+      path: '/api/stripe/webhook'
+      fullPath: '/api/stripe/webhook'
+      preLoaderRoute: typeof ApiStripeWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -811,6 +1170,7 @@ interface ThroneRouteRouteChildren {
   ThroneArchitectRoute: typeof ThroneArchitectRoute
   ThroneAuditRoute: typeof ThroneAuditRoute
   ThroneGodCodesRoute: typeof ThroneGodCodesRoute
+  ThronePaymentsRoute: typeof ThronePaymentsRoute
   ThroneProductsRoute: typeof ThroneProductsRoute
   ThroneRecoveryRoute: typeof ThroneRecoveryRoute
   ThroneSecurityRoute: typeof ThroneSecurityRoute
@@ -826,6 +1186,7 @@ const ThroneRouteRouteChildren: ThroneRouteRouteChildren = {
   ThroneArchitectRoute: ThroneArchitectRoute,
   ThroneAuditRoute: ThroneAuditRoute,
   ThroneGodCodesRoute: ThroneGodCodesRoute,
+  ThronePaymentsRoute: ThronePaymentsRoute,
   ThroneProductsRoute: ThroneProductsRoute,
   ThroneRecoveryRoute: ThroneRecoveryRoute,
   ThroneSecurityRoute: ThroneSecurityRoute,
@@ -880,14 +1241,31 @@ const rootRouteChildren: RootRouteChildren = {
   WatchRouteRoute: WatchRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AccountRoute: AccountRoute,
+  AdminRoute: AdminRoute,
+  AgentsRoute: AgentsRoute,
+  AppsRoute: AppsRoute,
   ContactRoute: ContactRoute,
+  ForgeRoute: ForgeRoute,
+  GamesRoute: GamesRoute,
+  InRoute: InRoute,
   LoginRoute: LoginRoute,
   MarketRoute: MarketRouteWithChildren,
+  PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
+  ReachRoute: ReachRoute,
   RedeemRoute: RedeemRoute,
+  ShieldRoute: ShieldRoute,
+  SignupRoute: SignupRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SoftwareRoute: SoftwareRoute,
   TeamRoute: TeamRoute,
+  TermsRoute: TermsRoute,
+  ToolsRoute: ToolsRoute,
   CheckoutSlugRoute: CheckoutSlugRoute,
+  CheckoutCancelRoute: CheckoutCancelRoute,
   CheckoutCompleteRoute: CheckoutCompleteRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiStripeWebhookRoute: ApiStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

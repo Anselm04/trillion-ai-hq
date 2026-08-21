@@ -10,60 +10,74 @@ import { Toaster } from "sonner";
 import { AuthProvider } from "@/lib/auth/provider";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
 import { AccessProvider } from "@/components/access-provider";
+import { ThemeProvider, useTheme } from "@/components/theme-provider";
+import { LocaleProvider } from "@/lib/i18n/locale";
+import { DEFAULT_DESCRIPTION, SITE_NAME, organizationJsonLd, pageSeo, websiteJsonLd } from "@/lib/seo";
 import appCss from "../styles.css?url";
 
-const APP_NAME = "Trillion AI";
+const THEME_BOOT = `(function(){try{if(localStorage.getItem('trillion-theme')==='day'){document.documentElement.classList.add('light');document.documentElement.style.colorScheme='light'}var l=localStorage.getItem('trillion-locale');if(l){document.documentElement.lang=l;if(l==='ar')document.documentElement.dir='rtl'}}catch(e){}})();`;
 
 export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: APP_NAME },
-      {
-        name: "description",
-        content:
-          "Trillion AI Tech Company Limited. Founded by Anselm Perkins — Founder, Owner & CEO. Software, built as a house.",
-      },
-      { name: "theme-color", content: "#0c0b09" },
-    ],
-    links: [
-      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600&display=swap",
-      },
-      { rel: "stylesheet", href: appCss },
-      { rel: "manifest", href: "/__grok/manifest.webmanifest" },
-      { rel: "apple-touch-icon", href: "/__grok/icon-180.png" },
-    ],
-  }),
+  head: () => {
+    const seo = pageSeo({
+      title: SITE_NAME,
+      description: DEFAULT_DESCRIPTION,
+      path: "/",
+      jsonLd: [organizationJsonLd(), websiteJsonLd()],
+    });
+    return {
+      meta: [
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+        { name: "theme-color", content: "#0a0908" },
+        { name: "color-scheme", content: "dark light" },
+        ...seo.meta,
+      ],
+      links: [
+        { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+        { rel: "stylesheet", href: appCss },
+        { rel: "manifest", href: "/__grok/manifest.webmanifest" },
+        { rel: "apple-touch-icon", href: "/__grok/icon-180.png" },
+        { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
+        ...seo.links,
+      ],
+      scripts: seo.scripts,
+    };
+  },
   component: RootDocument,
 });
+
+function ThemedToaster() {
+  const { theme } = useTheme();
+  return <Toaster theme={theme === "day" ? "light" : "dark"} position="bottom-right" />;
+}
 
 function RootDocument() {
   const [queryClient] = useState(
     () =>
       new QueryClient({
-        defaultOptions: { queries: { staleTime: 15_000, retry: 1 } },
+        defaultOptions: { queries: { staleTime: 30_000, gcTime: 300_000, retry: 0, refetchOnWindowFocus: false } },
       }),
   );
   return (
     <html lang="en" className="antialiased" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
       </head>
       <body>
         <PreviewHostBridge />
         <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <AccessProvider>
-              <Outlet />
-              <Toaster theme="dark" position="bottom-right" />
-            </AccessProvider>
-          </AuthProvider>
+          <ThemeProvider>
+            <LocaleProvider>
+              <AuthProvider>
+                <AccessProvider>
+                  <Outlet />
+                  <ThemedToaster />
+                </AccessProvider>
+              </AuthProvider>
+            </LocaleProvider>
+          </ThemeProvider>
         </QueryClientProvider>
         <Scripts />
       </body>

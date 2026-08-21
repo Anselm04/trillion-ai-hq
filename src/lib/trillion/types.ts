@@ -4,8 +4,22 @@ export type Category = (typeof CATEGORIES)[number];
 export const BILLING = ["one_time", "subscription", "free"] as const;
 export type Billing = (typeof BILLING)[number];
 
+export const BILLING_INTERVALS = ["week", "month", "quarter", "year"] as const;
+export type BillingInterval = (typeof BILLING_INTERVALS)[number];
+
 export const PRODUCT_STATUSES = ["draft", "published", "archived"] as const;
 export type ProductStatus = (typeof PRODUCT_STATUSES)[number];
+
+export type PriceTier = {
+  id?: number;
+  name: string;
+  amountCents: number;
+  billing: Billing;
+  billingInterval: BillingInterval | string | null;
+  stripePriceId?: string | null;
+  paymentLinkUrl?: string | null;
+  active?: boolean;
+};
 
 export type Product = {
   id: number;
@@ -16,9 +30,10 @@ export type Product = {
   category: Category;
   priceCents: number | null;
   billing: Billing;
-  billingInterval: string | null;
+  billingInterval: BillingInterval | string | null;
   demoUrl: string | null;
   videoUrl: string | null;
+  imageUrl: string | null;
   features: string;
   vantaReady: boolean;
   featured: boolean;
@@ -26,6 +41,7 @@ export type Product = {
   createdBy: string | null;
   createdAt: string;
   updatedAt: string;
+  prices: PriceTier[];
 };
 
 export type Access = {

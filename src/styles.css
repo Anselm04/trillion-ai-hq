@@ -2,33 +2,35 @@
 @import "tw-animate-css";
 
 @theme {
-  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-sans: ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Iowan Old Style", Palatino, Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  --color-background: #0c0b09;
-  --color-foreground: #ebe6dc;
-  --color-card: #151310;
-  --color-card-foreground: #ebe6dc;
-  --color-popover: #1a1714;
-  --color-popover-foreground: #ebe6dc;
-  --color-muted: #1c1916;
-  --color-muted-foreground: #9a9388;
-  --color-border: #2a2621;
-  --color-input: #2a2621;
-  --color-primary: #e4dccb;
-  --color-primary-foreground: #0c0b09;
-  --color-secondary: #1c1916;
-  --color-secondary-foreground: #ebe6dc;
-  --color-accent: #1c1916;
-  --color-accent-foreground: #ebe6dc;
-  --color-destructive: #c45c4a;
-  --color-ring: #e4dccb;
-  --color-sage: #c4b49a;
-  --color-sage-foreground: #0c0b09;
-  --color-warn: #c4a574;
-  --color-faint: #6e675c;
-  --color-paper: #e4dccb;
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-card: var(--card);
+  --color-card-foreground: var(--fg);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--fg);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-fg);
+  --color-border: var(--line);
+  --color-input: var(--line);
+  --color-primary: var(--gold);
+  --color-primary-foreground: var(--on-gold);
+  --color-secondary: var(--muted);
+  --color-secondary-foreground: var(--fg);
+  --color-accent: var(--muted);
+  --color-accent-foreground: var(--fg);
+  --color-destructive: var(--danger);
+  --color-ring: var(--gold);
+  --color-sage: var(--gold);
+  --color-sage-foreground: var(--on-gold);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--on-gold);
+  --color-warn: var(--warn);
+  --color-faint: var(--faint);
+  --color-paper: var(--paper);
 
   --radius-xs: 4px;
   --radius-sm: 8px;
@@ -38,14 +40,53 @@
   --radius-2xl: 28px;
   --radius-3xl: 32px;
 
-  --shadow-border: 0 0 0 1px rgba(228, 220, 203, 0.08);
-  --shadow-border-hover: 0 0 0 1px rgba(228, 220, 203, 0.16);
+  --shadow-border: 0 0 0 1px var(--line-soft);
+  --shadow-border-hover: 0 0 0 1px var(--line-strong);
+}
+
+:root {
+  color-scheme: dark;
+  --bg: #0a0908;
+  --fg: #f3ead8;
+  --card: #141210;
+  --popover: #181614;
+  --muted: #1a1815;
+  --muted-fg: #a89b86;
+  --line: #2c2822;
+  --gold: #c4a574;
+  --on-gold: #0a0908;
+  --danger: #c45c4a;
+  --warn: #d4b483;
+  --faint: #6f675c;
+  --paper: #f3ead8;
+  --line-soft: rgba(196, 165, 116, 0.14);
+  --line-strong: rgba(196, 165, 116, 0.32);
+}
+
+html.light {
+  color-scheme: light;
+  --bg: #f4efe4;
+  --fg: #1c1812;
+  --card: #fffcf6;
+  --popover: #fffdf8;
+  --muted: #ebe3d2;
+  --muted-fg: #6a6154;
+  --line: #d9d0be;
+  --gold: #8f6b32;
+  --on-gold: #fffaf0;
+  --danger: #b14332;
+  --warn: #9a7040;
+  --faint: #8a8072;
+  --paper: #1c1812;
+  --line-soft: rgba(143, 107, 50, 0.16);
+  --line-strong: rgba(143, 107, 50, 0.34);
 }
 
 @layer base {
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-size-adjust: 100%;
   }
 
   * {
@@ -56,6 +97,7 @@
   body,
   #app {
     min-height: 100%;
+    min-height: 100dvh;
     background: var(--color-background);
     color: var(--color-foreground);
   }
@@ -65,6 +107,33 @@
     line-height: 1.55;
   }
 
+  img,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  header {
+    contain: layout style;
+  }
+
+  footer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 280px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   h1,
   h2,
   h3 {
@@ -72,7 +141,7 @@
     font-weight: 500;
     text-wrap: balance;
     letter-spacing: -0.03em;
-    line-height: 1.12;
+    line-height: 1.08;
   }
 
   p {
@@ -85,68 +154,79 @@
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--color-sage) 35%, transparent);
+    background: color-mix(in oklab, var(--color-gold) 35%, transparent);
     color: var(--color-foreground);
   }
-}
-
-.bg-grid {
-  background-image:
-    linear-gradient(
-      color-mix(in oklab, var(--color-foreground) 4%, transparent) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      color-mix(in oklab, var(--color-foreground) 4%, transparent) 1px,
-      transparent 1px
-    );
-  background-size: 72px 72px;
-  background-position: center top;
-}
-
-.bg-atmosphere {
-  background:
-    radial-gradient(90rem 36rem at 8% -18%, color-mix(in oklab, var(--color-sage) 16%, transparent), transparent 58%),
-    radial-gradient(50rem 28rem at 92% 0%, color-mix(in oklab, var(--color-paper) 7%, transparent), transparent 50%);
 }
 
 .font-display {
   font-family: var(--font-display);
 }
 
+.hairline {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--color-gold) 55%, transparent),
+    transparent
+  );
+}
+
+.brand-t {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: color-mix(in oklab, var(--color-gold) 18%, transparent);
+  user-select: none;
+}
+
 @keyframes rise-in {
   from {
     opacity: 0;
-    transform: translateY(12px);
-    filter: blur(3px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0);
   }
 }
 
 .rise-in {
-  animation: rise-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .rise-in-1 {
-  animation-delay: 40ms;
+  animation-delay: 50ms;
 }
 .rise-in-2 {
-  animation-delay: 80ms;
+  animation-delay: 110ms;
 }
 .rise-in-3 {
-  animation-delay: 120ms;
+  animation-delay: 170ms;
 }
 .rise-in-4 {
-  animation-delay: 160ms;
+  animation-delay: 230ms;
+}
+
+@keyframes pulse-live {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.pulse-live {
+  animation: pulse-live 1.6s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rise-in {
+  .rise-in,
+  .pulse-live {
     animation: none;
   }
 }

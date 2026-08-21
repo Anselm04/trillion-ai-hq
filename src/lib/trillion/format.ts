@@ -4,6 +4,7 @@ import { ROLE_LABEL, type Role } from "./roles";
 export function formatPrice(
   cents: number | null | undefined,
   billing: Billing | string,
+  interval?: string | null,
 ): string {
   if (billing === "free" || cents === 0) return "Free";
   if (cents == null) return "Coming soon";
@@ -12,6 +13,12 @@ export function formatPrice(
     currency: "USD",
     maximumFractionDigits: cents % 100 === 0 ? 0 : 2,
   });
+  if (billing === "subscription") {
+    if (interval === "week") return `${dollars} / week`;
+    if (interval === "year") return `${dollars} / year`;
+    if (interval === "quarter") return `${dollars} / quarter`;
+    return `${dollars} / month`;
+  }
   return dollars;
 }
 

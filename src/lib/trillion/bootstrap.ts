@@ -7,7 +7,10 @@ import type { Access, Product } from "./types";
 type Sql = Awaited<ReturnType<typeof getSql>>;
 
 export function mapProduct(row: Record<string, unknown>): Product {
-  const billing = row.billing === "subscription" ? "one_time" : ((row.billing as Product["billing"]) ?? "one_time");
+  const billingRaw = String(row.billing ?? "one_time");
+  const billing: Product["billing"] =
+    billingRaw === "subscription" || billingRaw === "free" ? billingRaw : "one_time";
+  const intervalRaw = row.billing_interval ? String(row.billing_interval) : null;
   return {
     id: Number(row.id),
     slug: String(row.slug),
@@ -17,9 +20,10 @@ export function mapProduct(row: Record<string, unknown>): Product {
     category: row.category as Product["category"],
     priceCents: row.price_cents == null ? null : Number(row.price_cents),
     billing,
-    billingInterval: null,
+    billingInterval: billing === "subscription" ? intervalRaw : null,
     demoUrl: row.demo_url ? String(row.demo_url) : null,
     videoUrl: row.video_url ? String(row.video_url) : null,
+    imageUrl: row.image_url ? String(row.image_url) : null,
     features: String(row.features ?? ""),
     vantaReady: Boolean(row.vanta_ready),
     featured: Boolean(row.featured),
@@ -27,10 +31,32 @@ export function mapProduct(row: Record<string, unknown>): Product {
     createdBy: row.created_by ? String(row.created_by) : null,
     createdAt: String(row.created_at ?? ""),
     updatedAt: String(row.updated_at ?? ""),
+    prices: [],
   };
 }
 
+let seedLock: Promise<void> | null = null;
+
 export async function ensureSeed(sql: Sql): Promise<void> {
+  if (seedLock) return seedLock;
+  seedLock = runSeed(sql).catch((err) => {
+    seedLock = null;
+    throw err;
+  });
+  return seedLock;
+}
+
+async function runSeed(sql: Sql): Promise<void> {
+  await sql`
+    delete from products
+    where slug in (
+      'trillion-forge','trillion-sentinel','trillion-shield','architect',
+      'pulse-desk','market-kit','lattice','helix-notes'
+    )
+  `;
+  if (PRODUCT_SEEDS.length === 0) {
+    return;
+  }
   const count = await sql<{ n: number }>`select count(*)::int as n from products`;
   if ((count[0]?.n ?? 0) === 0) {
     for (const p of PRODUCT_SEEDS) {
@@ -47,12 +73,8 @@ export async function ensureSeed(sql: Sql): Promise<void> {
       `;
     }
   }
-  await sql`
-    update products
-    set billing = 'one_time', billing_interval = null, price_cents = null
-    where billing = 'subscription'
-  `;
 }
+
 
 export async function writeAudit(
   sql: Sql,

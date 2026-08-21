@@ -10,13 +10,21 @@ import { Label } from "@/components/ui/label";
 import { redeemGodCode } from "@/lib/trillion/command";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/redeem")({ component: Redeem });
+type RedeemSearch = { code?: string };
+
+export const Route = createFileRoute("/redeem")({
+  validateSearch: (s: Record<string, unknown>): RedeemSearch => ({
+    code: typeof s.code === "string" ? s.code : undefined,
+  }),
+  component: Redeem,
+});
 
 function Redeem() {
+  const { code: initial } = Route.useSearch();
   const { user, isPending } = useCurrentUserState();
   const { refresh } = useAccess();
   const navigate = useNavigate();
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState(initial ?? "");
   const [busy, setBusy] = useState(false);
 
   if (isPending) {
@@ -33,32 +41,25 @@ function Redeem() {
       <div className="mx-auto max-w-md px-4 py-16">
         <h1 className="font-display text-3xl">Redeem a God Code</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          One-time, time-limited, or a life pass. Issued only from Throne.
+          One-time, time-limited, or a life pass. Issued only from Admin.
         </p>
         <form
           className="mt-8 grid gap-3"
           onSubmit={(e) => {
             e.preventDefault();
             setBusy(true);
-            redeemGodCode({ data: code })
-              .then((r) => {
-                toast.success(`Access granted · ${r.tier}`);
+            redeemGodCode({ data: code.trim() })
+              .then(() => {
+                toast.success("Code redeemed");
                 refresh();
-                navigate({ to: "/desk" });
+                navigate({ to: "/account" });
               })
               .catch((err: Error) => toast.error(err.message))
               .finally(() => setBusy(false));
           }}
         >
-          <Label htmlFor="code">Code</Label>
-          <Input
-            id="code"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            placeholder="TRL-••••-••••-••••"
-            className="font-mono"
-            required
-          />
+          <Label htmlFor="code">Access Code</Label>
+          <Input id="code" value={code} onChange={(e) => setCode(e.target.value)} required />
           <Button type="submit" disabled={busy}>
             {busy ? "Checking…" : "Redeem"}
           </Button>
