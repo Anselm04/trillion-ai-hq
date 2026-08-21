@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build / cache
+dist/
+.output/
+.nitro/
+.tanstack/
+.vercel/
+.vite/
+*.tsbuildinfo
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Logs & OS
+*.log
+.DS_Store
+Thumbs.db
+
+# Sandbox / local runtime
+.grok/
+artifacts/
+screenshots/
+.project_id
+.node_modules.lock
+public/__grok/
+AGENTS.md
+AGENTS.project.md
+
+# Editor
+.idea/
+.vscode/
+*.swp
