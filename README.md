@@ -2,28 +2,29 @@
 
 Private operating system for **Trillion AI Tech Company Limited**.
 
-Public site, product catalog (Trillion Market), Stripe checkout, and three command floors:
+**Founder, Owner & CEO:** Anselm Perkins  
+**Command sign-in:** `anselm.perkins@gmail.com`  
+**Domain:** [trillionaitech.com](https://trillionaitech.com)
+
+Public site, product catalog (Trillion Market), and three command floors. There are **no subscription tiers** on this website. Stripe is wired for when a product is listed for sale.
 
 | Floor | Path | Access |
 |---|---|---|
 | Market | `/` `/market` | Public |
-| Throne | `/throne` | CEO only |
+| Throne | `/throne` | Anselm Perkins only |
 | Watch | `/watch` | Security team |
 | Desk | `/desk` | Staff (role-based) |
-
-**Domain:** [trillionaitech.com](https://trillionaitech.com)  
-**Founder & CEO:** Anselm Perkins
 
 ## Stack
 
 - TanStack Start + React 19 + Tailwind CSS v4
 - Better Auth (email/password, Google, X)
-- PGLite locally, Neon Postgres in production
-- Stripe Checkout (live key, or demo ledger without it)
+- PGLite locally, Postgres (Supabase or Neon) in production
+- Stripe Checkout for one-time sales when a secret key is present
 
 ## Command floors
 
-**Throne** — empire overview, users, products, staff, God Codes, Architect, Sentinel, Shield, analytics, disaster recovery, immutable audit logs.
+**Throne** — overview, users, products, staff, God Codes, Architect, Sentinel, Shield, analytics, disaster recovery, immutable audit logs.
 
 **Watch** — threat dashboard, staff activity, vulnerability scanner, incidents, audit viewer, reports.
 
@@ -39,18 +40,20 @@ cp .env.example .env
 npm run dev
 ```
 
-Open `http://localhost:8080`. First signed-in account claims Throne. `anselm@trillionaitech.com` is always elevated to Throne.
+Sign in with **anselm.perkins@gmail.com** (Google or email) to open Throne. Other accounts enter as customers until staffed.
 
 ## Deploy
 
-1. Set `DATABASE_URL` (Neon) and `BETTER_AUTH_SECRET`.
-2. Add Stripe keys for live checkout.
-3. Point Vercel at this repository. Production domain: `trillionaitech.com`.
+1. Set `DATABASE_URL` (Supabase or Neon) and `BETTER_AUTH_SECRET`.
+2. Set `BETTER_AUTH_URL=https://trillionaitech.com`.
+3. Add Stripe keys when you list a product for sale.
+4. Point Vercel at this repository. Production domain: `trillionaitech.com`.
 
 ## Contact
 
 - hello@trillionaitech.com
 - support@trillionaitech.com
+- anselm.perkins@gmail.com
 - anselm@trillionaitech.com
 
 © Trillion AI Tech Company Limited. All rights reserved.

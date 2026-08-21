@@ -3,32 +3,32 @@
 
 @theme {
   --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  --color-background: #090a0c;
-  --color-foreground: #eceae4;
-  --color-card: #12141a;
-  --color-card-foreground: #eceae4;
-  --color-popover: #161920;
-  --color-popover-foreground: #eceae4;
-  --color-muted: #1a1d25;
-  --color-muted-foreground: #8c8f98;
-  --color-border: #23262e;
-  --color-input: #23262e;
-  --color-primary: #d6d3cb;
-  --color-primary-foreground: #090a0c;
-  --color-secondary: #1a1d25;
-  --color-secondary-foreground: #eceae4;
-  --color-accent: #1a1d25;
-  --color-accent-foreground: #eceae4;
+  --color-background: #0c0b09;
+  --color-foreground: #ebe6dc;
+  --color-card: #151310;
+  --color-card-foreground: #ebe6dc;
+  --color-popover: #1a1714;
+  --color-popover-foreground: #ebe6dc;
+  --color-muted: #1c1916;
+  --color-muted-foreground: #9a9388;
+  --color-border: #2a2621;
+  --color-input: #2a2621;
+  --color-primary: #e4dccb;
+  --color-primary-foreground: #0c0b09;
+  --color-secondary: #1c1916;
+  --color-secondary-foreground: #ebe6dc;
+  --color-accent: #1c1916;
+  --color-accent-foreground: #ebe6dc;
   --color-destructive: #c45c4a;
-  --color-ring: #d6d3cb;
-  --color-sage: #7d9b94;
-  --color-sage-foreground: #090a0c;
+  --color-ring: #e4dccb;
+  --color-sage: #c4b49a;
+  --color-sage-foreground: #0c0b09;
   --color-warn: #c4a574;
-  --color-faint: #5c606a;
-  --color-paper: #d6d3cb;
+  --color-faint: #6e675c;
+  --color-paper: #e4dccb;
 
   --radius-xs: 4px;
   --radius-sm: 8px;
@@ -38,8 +38,8 @@
   --radius-2xl: 28px;
   --radius-3xl: 32px;
 
-  --shadow-border: 0 0 0 1px rgba(255, 255, 255, 0.08);
-  --shadow-border-hover: 0 0 0 1px rgba(255, 255, 255, 0.13);
+  --shadow-border: 0 0 0 1px rgba(228, 220, 203, 0.08);
+  --shadow-border-hover: 0 0 0 1px rgba(228, 220, 203, 0.16);
 }
 
 @layer base {
@@ -62,16 +62,17 @@
 
   body {
     font-family: var(--font-sans);
-    line-height: 1.5;
+    line-height: 1.55;
   }
 
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
+    font-weight: 500;
     text-wrap: balance;
     letter-spacing: -0.03em;
-    line-height: 1.15;
+    line-height: 1.12;
   }
 
   p {
@@ -84,7 +85,7 @@
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--color-sage) 40%, transparent);
+    background: color-mix(in oklab, var(--color-sage) 35%, transparent);
     color: var(--color-foreground);
   }
 }
@@ -92,16 +93,22 @@
 .bg-grid {
   background-image:
     linear-gradient(
-      color-mix(in oklab, var(--color-foreground) 5.5%, transparent) 1px,
+      color-mix(in oklab, var(--color-foreground) 4%, transparent) 1px,
       transparent 1px
     ),
     linear-gradient(
       90deg,
-      color-mix(in oklab, var(--color-foreground) 5.5%, transparent) 1px,
+      color-mix(in oklab, var(--color-foreground) 4%, transparent) 1px,
       transparent 1px
     );
-  background-size: 64px 64px;
+  background-size: 72px 72px;
   background-position: center top;
+}
+
+.bg-atmosphere {
+  background:
+    radial-gradient(90rem 36rem at 8% -18%, color-mix(in oklab, var(--color-sage) 16%, transparent), transparent 58%),
+    radial-gradient(50rem 28rem at 92% 0%, color-mix(in oklab, var(--color-paper) 7%, transparent), transparent 50%);
 }
 
 .font-display {

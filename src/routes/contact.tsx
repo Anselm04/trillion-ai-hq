@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { submitContact } from "@/lib/trillion/catalog";
+import { FOUNDER, MAIL } from "@/lib/trillion/company";
 
 export const Route = createFileRoute("/contact")({ component: Contact });
 
@@ -16,23 +17,22 @@ function Contact() {
 
   return (
     <PublicShell>
-      <div className="mx-auto grid max-w-5xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2">
+      <div className="mx-auto grid max-w-5xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2">
         <div>
-          <p className="text-xs tracking-[0.22em] text-sage uppercase">Contact</p>
-          <h1 className="mt-3 font-display text-4xl">Write the desk.</h1>
+          <p className="text-xs tracking-[0.26em] text-sage uppercase">Contact</p>
+          <h1 className="mt-4 font-display text-4xl">Write the house.</h1>
           <p className="mt-4 text-muted-foreground">
-            Hello for general, support for subscribers, Anselm for Throne matters. Messages land in
-            Shield and Support queues.
+            Hello for general, support for customers, {FOUNDER.name} for Throne matters.
           </p>
           <ul className="mt-8 space-y-2 text-sm">
             <li>
-              <a href="mailto:hello@trillionaitech.com">hello@trillionaitech.com</a>
+              <a href={`mailto:${MAIL.hello}`}>{MAIL.hello}</a>
             </li>
             <li>
-              <a href="mailto:support@trillionaitech.com">support@trillionaitech.com</a>
+              <a href={`mailto:${MAIL.support}`}>{MAIL.support}</a>
             </li>
             <li>
-              <a href="mailto:anselm@trillionaitech.com">anselm@trillionaitech.com</a>
+              <a href={`mailto:${MAIL.founder}`}>{MAIL.founder}</a>
             </li>
           </ul>
         </div>

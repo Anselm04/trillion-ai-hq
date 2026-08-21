@@ -27,6 +27,9 @@ export const startCheckout = createServerFn({ method: "POST" })
     `;
     const p = product[0];
     if (!p) throw new Error("Product not found");
+    if (p.price_cents == null) {
+      throw new Error("This product is not listed for sale yet.");
+    }
     if (p.billing === "free" || p.price_cents === 0) {
       await sql`
         insert into orders (user_id, product_id, amount_cents, billing, status)
@@ -55,7 +58,7 @@ export const startCheckout = createServerFn({ method: "POST" })
         process.env.BETTER_AUTH_URL?.replace(/\/+$/, "") ||
         "http://localhost:8080";
       const params = new URLSearchParams();
-      params.set("mode", p.billing === "subscription" ? "subscription" : "payment");
+      params.set("mode", "payment");
       params.set("success_url", `${origin}/checkout/complete?session_id={CHECKOUT_SESSION_ID}&order=${orderId}`);
       params.set("cancel_url", `${origin}/market/${p.slug}`);
       params.set("client_reference_id", String(orderId));
@@ -64,9 +67,6 @@ export const startCheckout = createServerFn({ method: "POST" })
       params.set("line_items[0][price_data][currency]", "usd");
       params.set("line_items[0][price_data][product_data][name]", p.name);
       params.set("line_items[0][price_data][unit_amount]", String(amount));
-      if (p.billing === "subscription") {
-        params.set("line_items[0][price_data][recurring][interval]", "month");
-      }
       const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
         method: "POST",
         headers: {
@@ -82,8 +82,9 @@ export const startCheckout = createServerFn({ method: "POST" })
         `;
         return { kind: "stripe" as const, url: body.url, orderId };
       }
+      throw new Error("Stripe could not open checkout. Write the desk instead.");
     }
-    return { kind: "ledger" as const, orderId };
+    throw new Error("Purchases open when a product is listed for sale.");
   });
 
 export const confirmLedgerCheckout = createServerFn({ method: "POST" })

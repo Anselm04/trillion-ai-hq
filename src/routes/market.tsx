@@ -20,10 +20,10 @@ function Market() {
     <PublicShell>
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
         <p className="text-xs tracking-[0.22em] text-sage uppercase">Trillion Market</p>
-        <h1 className="mt-3 font-display text-4xl">The catalog</h1>
+        <h1 className="mt-3 font-display text-4xl">From the studio</h1>
         <p className="mt-3 max-w-xl text-muted-foreground">
-          Apps, games, agents, tools, and software. Every SKU is published from the dashboard — add,
-          edit, or retire without a deploy.
+          Apps, games, agents, tools, and software. No subscription tiers. Request access until a
+          product is listed for sale.
         </p>
         <div className="mt-8 flex flex-wrap gap-2">
           {["all", ...CATEGORIES].map((c) => (

@@ -24,8 +24,10 @@ function Empire() {
   return (
     <div className="grid gap-6">
       <div>
-        <h1 className="font-display text-3xl">Empire overview</h1>
-        <p className="mt-1 text-sm text-muted-foreground">The live state of Trillion AI.</p>
+        <h1 className="font-display text-3xl">Command</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Anselm Perkins — Founder, Owner & CEO. The live state of the house.
+        </p>
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <Metric label="People" value={d?.people ?? "—"} />

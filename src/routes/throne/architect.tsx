@@ -14,6 +14,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { hasPerm } from "@/lib/trillion/roles";
+import { FOUNDER } from "@/lib/trillion/company";
 import { useAccess } from "@/components/access-provider";
 
 export const Route = createFileRoute("/throne/architect")({ component: Architect });
@@ -55,8 +56,8 @@ function Architect() {
         )}
       </div>
       <div className="rounded-2xl bg-card p-5 text-sm text-muted-foreground shadow-[var(--shadow-border)]">
-        Channels: in-desk queue (this page), email to anselm@trillionaitech.com, and this site on your
-        phone. SMS is a later carrier hook — the permission step is the same everywhere.
+        Channels: this queue and {FOUNDER.commandEmail}. Approve, reject, or modify. Architect cannot
+        act alone.
       </div>
       {allow && enabled && (
         <form

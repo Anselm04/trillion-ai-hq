@@ -65,15 +65,27 @@ function ProductPage() {
               </li>
             ))}
           </ul>
-          <p className="mt-8 font-display text-3xl tabular-nums">
+          <p className="mt-8 font-display text-3xl tabular-nums text-sage">
             {formatPrice(p.priceCents, p.billing)}
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Button asChild>
-              <Link to="/checkout/$slug" params={{ slug: p.slug }}>
-                {p.billing === "free" ? "Get" : "Purchase"}
-              </Link>
-            </Button>
+            {p.billing === "free" || p.priceCents === 0 ? (
+              <Button asChild>
+                <Link to="/checkout/$slug" params={{ slug: p.slug }}>
+                  Get
+                </Link>
+              </Button>
+            ) : p.priceCents != null ? (
+              <Button asChild>
+                <Link to="/checkout/$slug" params={{ slug: p.slug }}>
+                  Purchase
+                </Link>
+              </Button>
+            ) : (
+              <Button asChild>
+                <Link to="/contact">Request access</Link>
+              </Button>
+            )}
             <Button asChild variant="outline">
               <Link to="/contact">Talk to us</Link>
             </Button>

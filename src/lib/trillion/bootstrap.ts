@@ -1,11 +1,13 @@
 import { getSql } from "@/lib/db";
 import { GUEST_ACCESS, type Role, hasPerm, type Perm } from "./roles";
 import { PRODUCT_SEEDS } from "./seed-data";
+import { isFounderEmail } from "./company";
 import type { Access, Product } from "./types";
 
 type Sql = Awaited<ReturnType<typeof getSql>>;
 
 export function mapProduct(row: Record<string, unknown>): Product {
+  const billing = row.billing === "subscription" ? "one_time" : ((row.billing as Product["billing"]) ?? "one_time");
   return {
     id: Number(row.id),
     slug: String(row.slug),
@@ -14,8 +16,8 @@ export function mapProduct(row: Record<string, unknown>): Product {
     description: String(row.description ?? ""),
     category: row.category as Product["category"],
     priceCents: row.price_cents == null ? null : Number(row.price_cents),
-    billing: (row.billing as Product["billing"]) ?? "one_time",
-    billingInterval: row.billing_interval ? String(row.billing_interval) : null,
+    billing,
+    billingInterval: null,
     demoUrl: row.demo_url ? String(row.demo_url) : null,
     videoUrl: row.video_url ? String(row.video_url) : null,
     features: String(row.features ?? ""),
@@ -30,20 +32,26 @@ export function mapProduct(row: Record<string, unknown>): Product {
 
 export async function ensureSeed(sql: Sql): Promise<void> {
   const count = await sql<{ n: number }>`select count(*)::int as n from products`;
-  if ((count[0]?.n ?? 0) > 0) return;
-  for (const p of PRODUCT_SEEDS) {
-    await sql`
-      insert into products (
-        slug, name, tagline, description, category, price_cents, billing,
-        billing_interval, features, vanta_ready, featured, status
-      ) values (
-        ${p.slug}, ${p.name}, ${p.tagline}, ${p.description}, ${p.category},
-        ${p.priceCents}, ${p.billing}, ${p.billingInterval}, ${p.features},
-        ${p.vantaReady}, ${p.featured}, ${"published"}
-      )
-      on conflict (slug) do nothing
-    `;
+  if ((count[0]?.n ?? 0) === 0) {
+    for (const p of PRODUCT_SEEDS) {
+      await sql`
+        insert into products (
+          slug, name, tagline, description, category, price_cents, billing,
+          billing_interval, features, vanta_ready, featured, status
+        ) values (
+          ${p.slug}, ${p.name}, ${p.tagline}, ${p.description}, ${p.category},
+          ${p.priceCents}, ${p.billing}, ${p.billingInterval}, ${p.features},
+          ${p.vantaReady}, ${p.featured}, ${"published"}
+        )
+        on conflict (slug) do nothing
+      `;
+    }
   }
+  await sql`
+    update products
+    set billing = 'one_time', billing_interval = null, price_cents = null
+    where billing = 'subscription'
+  `;
 }
 
 export async function writeAudit(
@@ -150,15 +158,14 @@ export async function ensureProfile(sql: Sql, userId: string): Promise<Access> {
     `;
   }
 
-  const throne = await sql<{ user_id: string }>`
-    select user_id from profiles where role = 'throne' and status = 'active' limit 1
-  `;
   const email = (authUser.email ?? existing[0]?.email ?? "").toLowerCase();
-  const isFounder = email === "anselm@trillionaitech.com";
-  if (isFounder || throne.length === 0) {
+  if (isFounderEmail(email)) {
     await sql`
       update profiles
-      set role = 'throne', department = coalesce(department, 'Command'), status = 'active'
+      set role = 'throne',
+          display_name = coalesce(display_name, ${"Anselm Perkins"}),
+          department = 'Command',
+          status = 'active'
       where user_id = ${userId}
     `;
   }
@@ -179,37 +186,8 @@ export async function ensureProfile(sql: Sql, userId: string): Promise<Access> {
   if (!p) {
     return { ...GUEST_ACCESS, userId };
   }
-
-  if (
-    p.role.startsWith("god_") &&
-    p.god_expires_at &&
-    new Date(p.god_expires_at).getTime() < Date.now()
-  ) {
-    await sql`
-      update profiles set role = 'customer', god_expires_at = null, god_tier = null
-      where user_id = ${userId}
-    `;
-    await writeAudit(sql, {
-      actorId: userId,
-      actorEmail: p.email,
-      action: "god.expired",
-      targetType: "profile",
-      targetId: userId,
-      detail: "Time-limited God Code access expired.",
-    });
-    return {
-      userId,
-      email: p.email,
-      displayName: p.display_name,
-      role: "customer",
-      status: p.status,
-      godExpiresAt: null,
-      department: p.department,
-    };
-  }
-
   return {
-    userId,
+    userId: p.user_id,
     email: p.email,
     displayName: p.display_name,
     role: p.role as Role,
@@ -243,3 +221,4 @@ export async function staffAccess(userId: string, perm: Perm): Promise<{ sql: Sq
   assertPerm(access, perm);
   return { sql, access };
 }
+

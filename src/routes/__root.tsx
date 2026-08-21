@@ -23,9 +23,9 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "Trillion AI Tech Company Limited — the digital headquarters and operating system for a software empire.",
+          "Trillion AI Tech Company Limited. Founded by Anselm Perkins — Founder, Owner & CEO. Software, built as a house.",
       },
-      { name: "theme-color", content: "#090a0c" },
+      { name: "theme-color", content: "#0c0b09" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
@@ -33,7 +33,7 @@ export const Route = createRootRoute({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600&family=Syne:wght@500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500;600&display=swap",
       },
       { rel: "stylesheet", href: appCss },
       { rel: "manifest", href: "/__grok/manifest.webmanifest" },

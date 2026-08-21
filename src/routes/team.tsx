@@ -1,68 +1,54 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PublicShell } from "@/components/public-shell";
+import { FOUNDER, MAIL } from "@/lib/trillion/company";
 
 export const Route = createFileRoute("/team")({ component: Team });
-
-const PEOPLE = [
-  {
-    name: "Anselm Perkins",
-    role: "Founder & CEO",
-    email: "anselm@trillionaitech.com",
-    bio: "Holds Throne. Architect reports only to this seat.",
-  },
-  {
-    name: "Watch",
-    role: "Security",
-    email: "hello@trillionaitech.com",
-    bio: "Threat desk, incident response, Sentinel acknowledgement. Staffed from Throne.",
-  },
-  {
-    name: "Product",
-    role: "Product Manager",
-    email: "hello@trillionaitech.com",
-    bio: "Owns the live catalog. Adds, edits, and retires SKUs without a deploy.",
-  },
-  {
-    name: "Shield",
-    role: "Compliance Officer",
-    email: "hello@trillionaitech.com",
-    bio: "Evidence, access reviews, and the Vanta-aligned control map.",
-  },
-  {
-    name: "Pulse",
-    role: "Support Lead",
-    email: "support@trillionaitech.com",
-    bio: "Call-centre ready. Full subscriber lookup, tickets, usage history.",
-  },
-  {
-    name: "Market",
-    role: "Marketing Lead",
-    email: "hello@trillionaitech.com",
-    bio: "Campaigns that publish into the same catalog the factory fills.",
-  },
-];
 
 function Team() {
   return (
     <PublicShell>
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <p className="text-xs tracking-[0.22em] text-sage uppercase">Team</p>
-        <h1 className="mt-3 font-display text-4xl">Command structure</h1>
-        <p className="mt-3 max-w-xl text-muted-foreground">
-          Seats are assigned from Throne. The public page names the function; the people are the
-          signed-in staff behind it.
-        </p>
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {PEOPLE.map((p) => (
-            <div key={p.role} className="rounded-2xl bg-card p-5 shadow-[var(--shadow-border)]">
-              <p className="text-xs tracking-[0.16em] text-sage uppercase">{p.role}</p>
-              <h2 className="mt-3 font-display text-2xl">{p.name}</h2>
-              <p className="mt-2 text-sm text-muted-foreground">{p.bio}</p>
-              <a href={`mailto:${p.email}`} className="mt-4 inline-block text-sm text-foreground">
-                {p.email}
+      <div className="relative overflow-hidden">
+        <div className="bg-atmosphere pointer-events-none absolute inset-0 opacity-80" />
+        <div className="relative mx-auto max-w-4xl px-4 py-20 sm:px-6">
+          <p className="text-xs tracking-[0.26em] text-sage uppercase">Team</p>
+          <h1 className="mt-4 font-display text-4xl sm:text-5xl">One founder. A house around him.</h1>
+          <p className="mt-4 max-w-xl text-muted-foreground">
+            Seats are assigned from Throne. The public record names the person who owns the company.
+          </p>
+
+          <div className="mt-14 overflow-hidden rounded-3xl bg-card p-8 shadow-[var(--shadow-border)] sm:p-10">
+            <p className="text-xs tracking-[0.2em] text-sage uppercase">{FOUNDER.titles}</p>
+            <h2 className="mt-4 font-display text-4xl">{FOUNDER.name}</h2>
+            <p className="mt-4 max-w-xl text-muted-foreground">
+              Founder, owner, and chief executive of Trillion AI Tech Company Limited. Holds Throne.
+              Architect reports only to this seat.
+            </p>
+            <div className="mt-8 flex flex-col gap-2 text-sm">
+              <a href={`mailto:${FOUNDER.commandEmail}`} className="text-foreground">
+                {FOUNDER.commandEmail}
+              </a>
+              <a href={`mailto:${FOUNDER.companyEmail}`} className="text-muted-foreground">
+                {FOUNDER.companyEmail}
               </a>
             </div>
-          ))}
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {[
+              { title: "Watch", body: "Security. Staffed from Throne.", mail: MAIL.hello },
+              { title: "Desk", body: "Product, support, compliance, marketing.", mail: MAIL.hello },
+              { title: "Support", body: "Customer lookup and tickets.", mail: MAIL.support },
+              { title: "Hello", body: "The public desk.", mail: MAIL.hello },
+            ].map((s) => (
+              <div key={s.title} className="rounded-2xl bg-card/70 p-6 shadow-[var(--shadow-border)]">
+                <p className="font-display text-xl">{s.title}</p>
+                <p className="mt-2 text-sm text-muted-foreground">{s.body}</p>
+                <a href={`mailto:${s.mail}`} className="mt-4 inline-block text-sm text-sage">
+                  {s.mail}
+                </a>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </PublicShell>

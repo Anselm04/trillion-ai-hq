@@ -7,6 +7,7 @@ import { useAccess } from "@/components/access-provider";
 import { RedirectToSignIn } from "@/lib/auth/gates";
 import { hasPerm, type Perm } from "@/lib/trillion/roles";
 import { roleLabel } from "@/lib/trillion/format";
+import { FOUNDER } from "@/lib/trillion/company";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -121,7 +122,11 @@ export function DashShell({
             </Sheet>
             <div>
               <p className="text-sm font-medium">{title}</p>
-              <p className="text-[11px] text-muted-foreground">{roleLabel(access.role)}</p>
+              <p className="text-[11px] text-muted-foreground">
+                {access.role === "throne"
+                  ? `${FOUNDER.name} · ${FOUNDER.titles}`
+                  : roleLabel(access.role)}
+              </p>
             </div>
           </div>
           <AuthSlot compact />

@@ -22,7 +22,7 @@ export function ProductEditor({
     tagline: product?.tagline ?? "",
     description: product?.description ?? "",
     category: product?.category ?? "software",
-    priceCents: product?.priceCents ?? 0,
+    priceCents: product?.priceCents ?? null,
     billing: product?.billing ?? "one_time",
     features: product?.features ?? "",
     vantaReady: product?.vantaReady ?? false,
@@ -46,8 +46,15 @@ export function ProductEditor({
         const payload = {
           ...form,
           slug: slugify(form.slug || form.name),
+          billing: form.billing === "free" ? "free" : "one_time",
           priceCents:
-            form.billing === "free" ? 0 : form.priceCents === null ? null : Number(form.priceCents),
+            form.billing === "free"
+              ? 0
+              : form.billing === "coming_soon"
+                ? null
+                : form.priceCents === null
+                  ? null
+                  : Number(form.priceCents),
         };
         saveProduct({ data: payload })
           .then(() => {
@@ -106,12 +113,23 @@ export function ProductEditor({
           <select
             id="billing"
             className="h-11 rounded-lg border border-input bg-background px-3 text-sm"
-            value={form.billing}
-            onChange={(e) => set("billing", e.target.value)}
+            value={form.priceCents == null && form.billing !== "free" ? "coming_soon" : form.billing}
+            onChange={(e) => {
+              const v = e.target.value;
+              if (v === "coming_soon") {
+                set("billing", "one_time");
+                set("priceCents", null);
+              } else if (v === "free") {
+                set("billing", "free");
+                set("priceCents", 0);
+              } else {
+                set("billing", "one_time");
+              }
+            }}
           >
             <option value="one_time">One-time</option>
-            <option value="subscription">Subscription</option>
             <option value="free">Free</option>
+            <option value="coming_soon">Coming soon</option>
           </select>
         </div>
         <div className="grid gap-1.5">

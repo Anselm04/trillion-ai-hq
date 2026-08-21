@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PublicShell } from "@/components/public-shell";
+import { FOUNDER } from "@/lib/trillion/company";
 
 type LoginSearch = { next?: string };
 
@@ -50,9 +51,10 @@ function Login() {
             <TrillionMark size={36} />
           </div>
           <h1 className="mt-6 font-display text-3xl">Command access</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Identify yourself. The first seated founder claims Throne. Everyone else enters as a
-            customer until staffed or given a God Code.
+          <p className="mt-3 text-sm text-muted-foreground">
+            Throne is reserved for {FOUNDER.name}. Sign in with{" "}
+            <span className="text-foreground">{FOUNDER.commandEmail}</span> — Google or email.
+            Everyone else enters as a customer until staffed from Throne.
           </p>
         </div>
         {authEnabled ? (
@@ -85,6 +87,7 @@ function Login() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  placeholder={FOUNDER.commandEmail}
                 />
               </div>
               <div className="grid gap-1.5">
@@ -115,7 +118,10 @@ function Login() {
           <p className="text-sm text-muted-foreground">Sign-in is disabled.</p>
         )}
         <p className="text-center text-xs text-faint">
-          Have a God Code? <Link to="/redeem" className="underline">Redeem it</Link>
+          Have a God Code?{" "}
+          <Link to="/redeem" className="underline">
+            Redeem it
+          </Link>
         </p>
       </div>
     </PublicShell>

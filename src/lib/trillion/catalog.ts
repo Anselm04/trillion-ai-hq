@@ -80,6 +80,8 @@ export const saveProduct = createServerFn({ method: "POST" })
     const { sql, access } = await staffAccess(context.userId, "manageProducts");
     const slug = slugify(data.slug || data.name);
     if (!data.name.trim() || !slug) throw new Error("Name is required");
+    const billing = data.billing === "free" ? "free" : "one_time";
+    const priceCents = billing === "free" ? 0 : data.priceCents;
     if (data.id) {
       await sql`
         update products set
@@ -88,8 +90,8 @@ export const saveProduct = createServerFn({ method: "POST" })
           tagline = ${data.tagline},
           description = ${data.description},
           category = ${data.category},
-          price_cents = ${data.priceCents},
-          billing = ${data.billing},
+          price_cents = ${priceCents},
+          billing = ${billing},
           features = ${data.features},
           vanta_ready = ${data.vantaReady},
           featured = ${data.featured},
@@ -115,7 +117,7 @@ export const saveProduct = createServerFn({ method: "POST" })
         features, vanta_ready, featured, status, demo_url, video_url, created_by
       ) values (
         ${slug}, ${data.name.trim()}, ${data.tagline}, ${data.description},
-        ${data.category}, ${data.priceCents}, ${data.billing}, ${data.features},
+        ${data.category}, ${priceCents}, ${billing}, ${data.features},
         ${data.vantaReady}, ${data.featured}, ${data.status},
         ${data.demoUrl ?? null}, ${data.videoUrl ?? null}, ${access.userId}
       )

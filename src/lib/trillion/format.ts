@@ -6,13 +6,12 @@ export function formatPrice(
   billing: Billing | string,
 ): string {
   if (billing === "free" || cents === 0) return "Free";
-  if (cents == null) return "Contact";
+  if (cents == null) return "Coming soon";
   const dollars = (cents / 100).toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
     maximumFractionDigits: cents % 100 === 0 ? 0 : 2,
   });
-  if (billing === "subscription") return `${dollars}/mo`;
   return dollars;
 }
 

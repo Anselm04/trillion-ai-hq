@@ -6,7 +6,7 @@ import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { PublicShell } from "@/components/public-shell";
 import { Button } from "@/components/ui/button";
 import { getProduct } from "@/lib/trillion/catalog";
-import { confirmLedgerCheckout, startCheckout } from "@/lib/trillion/commerce";
+import { startCheckout } from "@/lib/trillion/commerce";
 import { formatPrice } from "@/lib/trillion/format";
 import { toast } from "sonner";
 
@@ -46,12 +46,12 @@ function Checkout() {
           {formatPrice(p.priceCents, p.billing)}
         </p>
         <p className="mt-2 text-xs text-faint">
-          Stripe Checkout is used when a live secret is configured. Otherwise the headquarters ledger
-          records the purchase for this signed-in account.
+          Paid products open Stripe Checkout. Products without a price are not for sale yet — write
+          the desk instead.
         </p>
         <Button
           className="mt-8 w-full"
-          disabled={busy}
+          disabled={busy || p.priceCents == null}
           onClick={() => {
             setBusy(true);
             startCheckout({ data: slug })
@@ -65,17 +65,13 @@ function Checkout() {
                   navigate({ to: "/account" });
                   return;
                 }
-                await confirmLedgerCheckout({ data: r.orderId });
-                navigate({
-                  to: "/checkout/complete",
-                  search: { order: String(r.orderId) },
-                });
+                toast.error("This product is not listed for sale yet.");
               })
               .catch((err: Error) => toast.error(err.message))
               .finally(() => setBusy(false));
           }}
         >
-          {busy ? "Processing…" : p.billing === "free" ? "Confirm" : "Pay"}
+          {busy ? "Processing…" : p.billing === "free" || p.priceCents === 0 ? "Confirm" : p.priceCents == null ? "Not for sale yet" : "Pay"}
         </Button>
         <Button asChild variant="ghost" className="mt-2 w-full">
           <Link to="/market/$slug" params={{ slug }}>
